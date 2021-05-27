@@ -21,7 +21,6 @@ const App = () => {
 
   const generateRandom = () => {
     const randomNum = Math.floor(Math.random() * 6)
-    console.log(randomNum)
     setSelected(randomNum)
   }
 
@@ -33,10 +32,13 @@ const App = () => {
 
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <div>{anecdotes[selected]}</div>
       <div>has {votes[selected]} votes</div>
       <Button action={upvote} text={'vote'} />
-      <Button action={generateRandom} text={'next anecdote'} />  
+      <Button action={generateRandom} text={'next anecdote'} /> 
+      <h2>Anecdote with most votes</h2>
+      <div>{anecdotes[votes.indexOf(Math.max(...votes))]}</div>
     </div>
   )
 }
