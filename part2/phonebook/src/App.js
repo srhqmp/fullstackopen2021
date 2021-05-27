@@ -1,27 +1,17 @@
 import React, { useState } from 'react'
+import {Filter, PersonForm, Persons} from './components/Components'
 
-const Contact = ({person}) => {
-  return (
-    <div>{person.name} {person.number}</div>
-  )
-}
-
-const DisplayContacts = ({persons}) => {
-  return (
-    persons.map(person => <Contact key={person.name} person={person} />)
-  )
-}
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
+  const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'd', number: '39-23-6423122' }
-  ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
-  const [ newSearch, setNewSearch ] = useState('')
+  ])
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [newSearch, setNewSearch] = useState('')
 
   const contactExists = (name) => persons.some(person => person.name === name)
 
@@ -50,29 +40,18 @@ const App = () => {
       setPersons(persons.concat(newContact))
       setNewName('')
       setNewNumber('')
-    } 
+    }
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <div>
-        filter shown with <input value={newSearch} onChange={handleSearch} />
-      </div>
-      <form>
-        <h2>Add new</h2>
-        <div>name: <input value={newName} onChange={handleNameInput} /></div>
-        <div>number: <input value={newNumber} onChange={handleNumberInput} /></div>
-        <div>
-          <button type="submit" onClick={handleAddContact} >add</button>
-        </div>
-      </form>
+      <Filter value={newSearch} handleSearch={handleSearch} />
+      <h2>Add new</h2>
+      <PersonForm newName={newName} newNumber={newNumber} handleNameInput={handleNameInput}
+        handleNumberInput={handleNumberInput} handleAddContact={handleAddContact} />
       <h2>Numbers</h2>
-      <div>
-        <DisplayContacts persons={persons.filter(person => {
-          return person.name.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
-        })} />
-      </div>
+      <Persons persons={persons} newSearch={newSearch} />
     </div>
   )
 }
