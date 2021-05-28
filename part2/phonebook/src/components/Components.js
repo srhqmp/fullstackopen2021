@@ -21,26 +21,26 @@ const PersonForm = ({ newName, newNumber, handleNameInput,
     )
 }
 
-const Contact = ({ person }) => {
+const Contact = ({ person, handleDeleteContact }) => {
     return (
-        <div>{person.name} {person.number}</div>
+        <div>{person.name} {person.number} <button onClick={handleDeleteContact}>delete</button></div>
     )
 }
 
-const DisplayContacts = ({ persons }) => {
-    return (
-        persons.map(person => <Contact key={person.name} person={person} />)
-    )
-}
+// const DisplayContacts = ({ persons, handleDeleteContact }) => {
+//     return (
+//         persons.map((person, i) => <Contact key={person.id} person={person} handleDeleteContact={handleDeleteContact(i)} />)
+//     )
+// }
 
-const Persons = ({ persons, newSearch }) => {
-    return (
-        <div>
-            <DisplayContacts persons={persons.filter(person => {
-                return person.name.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
-            })} />
-        </div>
-    )
-}
+// const Persons = ({ persons, newSearch, handleDeleteContact }) => {
+//     return (
+//         <div>
+//             <DisplayContacts persons={persons.filter(person => {
+//                 return person.name.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
+//             })} handleDeleteContact={handleDeleteContact} />
+//         </div>
+//     )
+// }
 
-export { Filter, PersonForm, Persons }
+export { Filter, PersonForm, Contact }

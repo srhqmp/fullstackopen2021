@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Filter, PersonForm, Persons } from './components/Components'
+import { Filter, PersonForm, Contact } from './components/Components'
 import contactService from './service/contact'
 
 const App = () => {
@@ -50,6 +50,14 @@ const App = () => {
     }
   }
 
+  const handleDeleteContact = (id) => {
+    const contactToDelete = persons.find(person => person.id === id)
+    if (window.confirm(`Delete ${contactToDelete.name} ?`)) {
+      contactService.deleteContact(id)
+      setPersons(persons.filter(person => person.id !== id))
+    }
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -58,7 +66,12 @@ const App = () => {
       <PersonForm newName={newName} newNumber={newNumber} handleNameInput={handleNameInput}
         handleNumberInput={handleNumberInput} handleAddContact={handleAddContact} />
       <h2>Numbers</h2>
-      <Persons persons={persons} newSearch={newSearch} />
+      {persons.filter(person => {
+        return person.name.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
+      }).map((person) => {
+        return (<Contact key={person.id} person={person} handleDeleteContact={() => handleDeleteContact(person.id)} />)
+      })
+      }
     </div>
   )
 }
