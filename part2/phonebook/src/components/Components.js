@@ -15,7 +15,7 @@ const PersonForm = ({ newName, newNumber, handleNameInput,
             <div>name: <input value={newName} onChange={handleNameInput} /></div>
             <div>number: <input value={newNumber} onChange={handleNumberInput} /></div>
             <div>
-                <button type="submit" onClick={handleAddContact} >add</button>
+                <button type="submit" onClick={handleAddContact}>add</button>
             </div>
         </form>
     )
@@ -43,4 +43,4 @@ const Persons = ({ persons, newSearch }) => {
     )
 }
 
-export {Filter, PersonForm, Persons}
+export { Filter, PersonForm, Persons }
