@@ -8,15 +8,14 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
 
-  const hook = () => {
+  useEffect(() => {
+    const url = 'http://localhost:3002/persons'
     axios
-      .get('http://localhost:3001/persons')
+      .get(url)
       .then(response => {
         setPersons(response.data)
       })
-  }
-
-  useEffect(hook, [])
+  }, [])
 
   const contactExists = (name) => persons.some(person => person.name === name)
 
@@ -42,9 +41,14 @@ const App = () => {
     if (contactExists(newName)) {
       alert(`${newName} is already added to phonebook`)
     } else {
-      setPersons(persons.concat(newContact))
-      setNewName('')
-      setNewNumber('')
+      const url = 'http://localhost:3002/persons'
+      axios
+        .post(url, newContact)
+        .then(response => {
+          setPersons(persons.concat(newContact))
+          setNewName('')
+          setNewNumber('')
+        })
     }
   }
 
