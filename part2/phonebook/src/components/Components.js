@@ -27,20 +27,4 @@ const Contact = ({ person, handleDeleteContact }) => {
     )
 }
 
-// const DisplayContacts = ({ persons, handleDeleteContact }) => {
-//     return (
-//         persons.map((person, i) => <Contact key={person.id} person={person} handleDeleteContact={handleDeleteContact(i)} />)
-//     )
-// }
-
-// const Persons = ({ persons, newSearch, handleDeleteContact }) => {
-//     return (
-//         <div>
-//             <DisplayContacts persons={persons.filter(person => {
-//                 return person.name.toLocaleLowerCase().includes(newSearch.toLocaleLowerCase())
-//             })} handleDeleteContact={handleDeleteContact} />
-//         </div>
-//     )
-// }
-
 export { Filter, PersonForm, Contact }

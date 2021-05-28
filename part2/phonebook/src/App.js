@@ -16,7 +16,9 @@ const App = () => {
       })
   }, [])
 
-  const contactExists = (name) => persons.some(person => person.name === name)
+  const contactExists = (name, number) => persons.some(person => person.name === name && person.number === number)
+
+  const differentNumber = (name, number) => persons.some(person => person.name === name && person.number !== number)
 
   const handleSearch = (event) => {
     setNewSearch(event.target.value)
@@ -37,8 +39,19 @@ const App = () => {
       number: newNumber,
     }
 
-    if (contactExists(newName)) {
+    if (contactExists(newName, newNumber)) {
       alert(`${newName} is already added to phonebook`)
+    } else if (differentNumber(newName, newNumber)) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const id = persons.find(person => person.name === newName).id
+        contactService
+          .updateContact(id, newContact)
+          .then(added => {
+            setPersons(persons.map(person => person.id !== id ? person : added))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
     } else {
       contactService
         .addContact(newContact)
