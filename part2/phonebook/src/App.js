@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Filter, PersonForm, Contact } from './components/Components'
+import { Filter, PersonForm, Contact, Notification } from './components/Components'
 import contactService from './service/contact'
 
 const App = () => {
@@ -7,6 +7,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     contactService
@@ -40,7 +42,12 @@ const App = () => {
     }
 
     if (contactExists(newName, newNumber)) {
-      alert(`${newName} is already added to phonebook`)
+      setErrorMessage(
+        `${newName} is already added to phonebook`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     } else if (differentNumber(newName, newNumber)) {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         const id = persons.find(person => person.name === newName).id
@@ -48,6 +55,10 @@ const App = () => {
           .updateContact(id, newContact)
           .then(added => {
             setPersons(persons.map(person => person.id !== id ? person : added))
+            setSuccessMessage(`Updated number of ${newName}`)
+            setTimeout(() => {
+              setSuccessMessage(null)
+            }, 5000)
             setNewName('')
             setNewNumber('')
           })
@@ -56,6 +67,10 @@ const App = () => {
       contactService
         .addContact(newContact)
         .then(addedContact => {
+          setSuccessMessage(`Added ${addedContact.name}`)
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
           setPersons(persons.concat(addedContact))
           setNewName('')
           setNewNumber('')
@@ -68,12 +83,18 @@ const App = () => {
     if (window.confirm(`Delete ${contactToDelete.name} ?`)) {
       contactService.deleteContact(id)
       setPersons(persons.filter(person => person.id !== id))
+      setSuccessMessage(`Deleted ${contactToDelete.name}`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
     }
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={errorMessage} className={'error'} />
+      <Notification message={successMessage} className={'success'} />
       <Filter value={newSearch} handleSearch={handleSearch} />
       <h2>Add new</h2>
       <PersonForm newName={newName} newNumber={newNumber} handleNameInput={handleNameInput}

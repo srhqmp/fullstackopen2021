@@ -27,4 +27,16 @@ const Contact = ({ person, handleDeleteContact }) => {
     )
 }
 
-export { Filter, PersonForm, Contact }
+const Notification = ({ message, className }) => {
+    if (message === null) {
+        return null
+    }
+
+    return (
+        <div className={className}>
+            {message}
+        </div>
+    )
+}
+
+export { Filter, PersonForm, Contact, Notification }
