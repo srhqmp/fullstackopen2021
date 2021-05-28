@@ -1,4 +1,6 @@
 import React from 'react';
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const FindCountry = ({ value, handleFindCountry }) => {
     return (
@@ -6,8 +8,33 @@ const FindCountry = ({ value, handleFindCountry }) => {
     )
 }
 
+const ShowWeather = ({ weather }) => {
+    const { temperature, weather_icons, wind_speed, wind_dir } = weather.current
+    return (
+        <div>
+            <div><strong>temperature: </strong>{temperature} Celcius</div>
+            <img width={'75px'} src={weather_icons[0]} alt={'weather icon'} />
+            <div><strong>wind: </strong>{wind_speed} km/h direction {wind_dir}</div>
+        </div>
+    )
+}
+
 const CountryDetails = ({ country }) => {
+    const [weather, setWeather] = useState('')
     const { name, capital, population, languages, flag } = country
+    const api_key = process.env.REACT_APP_API_KEY
+
+    const hook = () => {
+        const url = `http://api.weatherstack.com/current?access_key=${api_key}&query=${name}`
+        axios
+            .get(url)
+            .then(response => {
+                const data = response.data
+                setWeather(data)
+            })
+    }
+
+    useEffect(hook, [name, api_key])
 
     return (
         <div>
@@ -21,6 +48,8 @@ const CountryDetails = ({ country }) => {
                 }
             </ul>
             <img width={'150px'} src={flag} alt={name} />
+            <h3>Weather in {name}</h3>
+            {weather ? <ShowWeather weather={weather} /> : ''}
         </div>
     )
 }
@@ -40,7 +69,7 @@ const ListCountries = ({ countries, newSearch, handleShow }) => {
         if (countriesSize <= 10) {
             return (
                 <div key={country.numericCode}>
-                    {country.name} 
+                    {country.name}
                     <button value={country.name} onClick={handleShow}>show</button>
                 </div>
             )
