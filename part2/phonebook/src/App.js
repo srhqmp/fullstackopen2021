@@ -82,11 +82,22 @@ const App = () => {
     const contactToDelete = persons.find(person => person.id === id)
     if (window.confirm(`Delete ${contactToDelete.name} ?`)) {
       contactService.deleteContact(id)
-      setPersons(persons.filter(person => person.id !== id))
-      setSuccessMessage(`Deleted ${contactToDelete.name}`)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
+        .then(message => {
+          console.log('sarahhh')
+          setPersons(persons.filter(person => person.id !== id))
+          setSuccessMessage(`Deleted ${contactToDelete.name}`)
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+        .catch(message => {
+          console.log('errroooor')
+          setErrorMessage(`Information of ${contactToDelete.name} has already been removed from server`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+
     }
   }
 
