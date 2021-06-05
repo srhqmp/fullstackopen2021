@@ -12,8 +12,8 @@ const PersonForm = ({ newName, newNumber, handleNameInput,
     handleNumberInput, handleAddContact }) => {
     return (
         <form>
-            <div>name: <input value={newName} onChange={handleNameInput} /></div>
-            <div>number: <input value={newNumber} onChange={handleNumberInput} /></div>
+            <div>name: <input value={newName} onChange={handleNameInput} required/></div>
+            <div>number: <input value={newNumber} onChange={handleNumberInput} required/></div>
             <div>
                 <button type="submit" onClick={handleAddContact}>add</button>
             </div>

@@ -41,7 +41,21 @@ const App = () => {
       number: newNumber,
     }
 
-    if (contactExists(newName, newNumber)) {
+    if (!newName) {
+      setErrorMessage(
+        `Please add a name`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    } else if (!newNumber) {
+      setErrorMessage(
+        `Please add a number`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    } else if (contactExists(newName, newNumber)) {
       setErrorMessage(
         `${newName} is already added to phonebook`
       )
