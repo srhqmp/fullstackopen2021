@@ -43,14 +43,14 @@ const App = () => {
 
     if (!newName) {
       setErrorMessage(
-        `Please add a name`
+        'Please add a name'
       )
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
     } else if (!newNumber) {
       setErrorMessage(
-        `Please add a number`
+        'Please add a number'
       )
       setTimeout(() => {
         setErrorMessage(null)
@@ -76,6 +76,14 @@ const App = () => {
             setNewName('')
             setNewNumber('')
           })
+          .catch(error => {
+            setErrorMessage(JSON.stringify(error.response.data.error).replace(/"([^"]+)":/g, ''))
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+
+            console.log('error', error.response.data)
+          })
       }
     } else {
       contactService
@@ -88,6 +96,13 @@ const App = () => {
           setPersons(persons.concat(addedContact))
           setNewName('')
           setNewNumber('')
+        }).catch(error => {
+          setErrorMessage(JSON.stringify(error.response.data.error).replace(/"/g, ''))
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+
+          console.log(error.response.data)
         })
     }
   }

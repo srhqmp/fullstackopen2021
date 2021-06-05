@@ -1,42 +1,42 @@
 import React from 'react'
 
 const Filter = ({ newSearch, handleSearch }) => {
-    return (
-        <div>
+  return (
+    <div>
             filter shown with <input value={newSearch} onChange={handleSearch} />
-        </div>
-    )
+    </div>
+  )
 }
 
 const PersonForm = ({ newName, newNumber, handleNameInput,
-    handleNumberInput, handleAddContact }) => {
-    return (
-        <form>
-            <div>name: <input value={newName} onChange={handleNameInput} required/></div>
-            <div>number: <input value={newNumber} onChange={handleNumberInput} required/></div>
-            <div>
-                <button type="submit" onClick={handleAddContact}>add</button>
-            </div>
-        </form>
-    )
+  handleNumberInput, handleAddContact }) => {
+  return (
+    <form>
+      <div>name: <input value={newName} onChange={handleNameInput} /></div>
+      <div>number: <input value={newNumber} onChange={handleNumberInput} /></div>
+      <div>
+        <button type="submit" onClick={handleAddContact}>add</button>
+      </div>
+    </form>
+  )
 }
 
 const Contact = ({ person, handleDeleteContact }) => {
-    return (
-        <div>{person.name} {person.number} <button onClick={handleDeleteContact}>delete</button></div>
-    )
+  return (
+    <div>{person.name} {person.number} <button onClick={handleDeleteContact}>delete</button></div>
+  )
 }
 
 const Notification = ({ message, className }) => {
-    if (message === null) {
-        return null
-    }
+  if (message === null) {
+    return null
+  }
 
-    return (
-        <div className={className}>
-            {message}
-        </div>
-    )
+  return (
+    <div className={className}>
+      {message}
+    </div>
+  )
 }
 
 export { Filter, PersonForm, Contact, Notification }
