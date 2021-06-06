@@ -77,7 +77,7 @@ const App = () => {
             setNewNumber('')
           })
           .catch(error => {
-            setErrorMessage(JSON.stringify(error.response.data.error).replace(/"([^"]+)":/g, ''))
+            setErrorMessage(error.response.data.error)
             setTimeout(() => {
               setErrorMessage(null)
             }, 5000)
@@ -97,7 +97,7 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         }).catch(error => {
-          setErrorMessage(JSON.stringify(error.response.data.error).replace(/"/g, ''))
+          setErrorMessage(error.response.data.error)
           setTimeout(() => {
             setErrorMessage(null)
           }, 5000)
@@ -109,9 +109,10 @@ const App = () => {
 
   const handleDeleteContact = (id) => {
     const contactToDelete = persons.find(person => person.id === id)
+    // eslint-disable-next-line no-undef
     if (window.confirm(`Delete ${contactToDelete.name} ?`)) {
       contactService.deleteContact(id)
-        .then(message => {
+        .then(() => {
           console.log('sarahhh')
           setPersons(persons.filter(person => person.id !== id))
           setSuccessMessage(`Deleted ${contactToDelete.name}`)
@@ -119,7 +120,7 @@ const App = () => {
             setSuccessMessage(null)
           }, 5000)
         })
-        .catch(message => {
+        .catch(() => {
           console.log('errroooor')
           setErrorMessage(`Information of ${contactToDelete.name} has already been removed from server`)
           setTimeout(() => {
