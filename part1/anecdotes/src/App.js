@@ -1,46 +1,60 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-const Button = ({action, text}) => {
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>{text}</button>
+);
+
+const Display = ({ votes, selected, anecdotes }) => {
+  const totalVotes = votes[selected];
   return (
-    <button onClick={action}>{text}</button>
-  )
-}
+    <div>
+      <div>{anecdotes[selected]}</div>
+      <div>
+        has {totalVotes} {totalVotes > 1 ? "votes" : "vote"}
+      </div>
+    </div>
+  );
+};
 
 const App = () => {
   const anecdotes = [
-    'If it hurts, do it more often',
-    'Adding manpower to a late software project makes it later!',
-    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-    'Premature optimization is the root of all evil.',
-    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
-  ]
-   
-  const [selected, setSelected] = useState(0)
-  const [votes, setVote] = useState(new Array(anecdotes.length).fill(0))
+    "If it hurts, do it more often",
+    "Adding manpower to a late software project makes it later!",
+    "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+    "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    "Premature optimization is the root of all evil.",
+    "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+    "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blod tests when dianosing patients",
+  ];
 
-  const generateRandom = () => {
-    const randomNum = Math.floor(Math.random() * 6)
-    setSelected(randomNum)
-  }
+  const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
 
-  const upvote = () => {
-    const copy = [...votes]
-    copy[selected] += 1
-    setVote(copy)
-  }
+  const handleClick = () => {
+    const randomNum = Math.floor(Math.random() * anecdotes.length);
+    setSelected(randomNum);
+  };
+
+  const handleVote = () => {
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+  };
 
   return (
     <div>
       <h2>Anecdote of the day</h2>
-      <div>{anecdotes[selected]}</div>
-      <div>has {votes[selected]} votes</div>
-      <Button action={upvote} text={'vote'} />
-      <Button action={generateRandom} text={'next anecdote'} /> 
-      <h2>Anecdote with most votes</h2>
-      <div>{anecdotes[votes.indexOf(Math.max(...votes))]}</div>
+      <Display votes={votes} selected={selected} anecdotes={anecdotes} />
+      <Button handleClick={handleVote} text="vote" />
+      <Button handleClick={handleClick} text="next anecdote" />
+      <h2>Anecdote with the most votes</h2>
+      <Display
+        votes={votes}
+        selected={votes.indexOf(Math.max(...votes))}
+        anecdotes={anecdotes}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
