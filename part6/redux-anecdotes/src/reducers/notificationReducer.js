@@ -1,19 +1,24 @@
-const initialState = 'hello there, thanks for using my anecdotes'
+const initialState = {
+  message: 'hello there, thanks for using my anecdotes',
+  display: '',
+}
 
-export const displaySuccessNotif = (message) => {
+export const displayVoteNotif = (message) => {
   return {
-    type: 'SUCCESS_NOTIF',
+    type: 'VOTE_NOTIF',
     data: {
       message,
+      display: '',
     },
   }
 }
 
-export const displayErrorNotif = (message) => {
+export const hideNotif = () => {
   return {
-    type: 'ERROR_NOTIF',
+    type: 'HIDE_NOTIF',
     data: {
-      message,
+      message: '',
+      display: 'none',
     },
   }
 }
@@ -23,7 +28,9 @@ const notificationReducer = (state = initialState, action) => {
   console.log('action', action)
 
   switch (action.type) {
-    case 'SUCCESS_NOTIF':
+    case 'VOTE_NOTIF':
+      return action.data
+    case 'HIDE_NOTIF':
       return action.data
     default:
       return state
