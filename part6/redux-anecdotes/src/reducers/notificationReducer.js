@@ -28,10 +28,14 @@ const notificationReducer = (state = initialState, action) => {
   console.log('action', action)
 
   switch (action.type) {
-    case 'VOTE_NOTIF':
-      return action.data
-    case 'HIDE_NOTIF':
-      return action.data
+    case 'VOTE_NOTIF': {
+      state = action.data
+      return state
+    }
+    case 'HIDE_NOTIF': {
+      state = action.data
+      return state
+    }
     default:
       return state
   }
