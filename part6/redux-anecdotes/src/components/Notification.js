@@ -6,9 +6,13 @@ const Notification = () => {
   const notification = useSelector((state) => state.notification)
   const dispatch = useDispatch()
 
-  setTimeout(() => {
-    dispatch(hideNotif())
-  }, 5000)
+  const hide = () =>
+    notification.message
+      ? setTimeout(() => {
+          dispatch(hideNotif())
+        }, 5000)
+      : ''
+  hide()
 
   const style = {
     display: notification.display,
@@ -16,6 +20,7 @@ const Notification = () => {
     padding: 10,
     borderWidth: 1,
   }
+
   return <div style={style}>{notification.message}</div>
 }
 
