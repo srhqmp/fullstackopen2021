@@ -13,24 +13,27 @@ const App = () => {
   const handleNewAnecdote = (event) => {
     event.preventDefault()
     dispatch(createNewAnecdote(event.target.newAnecdote.value))
+    event.target.newAnecdote.value = ''
   }
 
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotes.map((anecdote) => (
-        <div key={anecdote.id}>
-          <div>{anecdote.content}</div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+      {anecdotes
+        .sort((a, b) => b.votes - a.votes)
+        .map((anecdote) => (
+          <div key={anecdote.id}>
+            <div>{anecdote.content}</div>
+            <div>
+              has {anecdote.votes}
+              <button onClick={() => vote(anecdote.id)}>vote</button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
       <h2>create new</h2>
       <form onSubmit={handleNewAnecdote}>
         <div>
-          <input name="newAnecdote" required/>
+          <input name="newAnecdote" required />
         </div>
         <button>create</button>
       </form>
