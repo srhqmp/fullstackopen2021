@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { upvote } from '../reducers/anecdoteReducer'
-import { displayVoteNotif } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = () => {
   const anecdotes = useSelector((state) => state.anecdotes)
@@ -11,7 +11,7 @@ const AnecdoteList = () => {
   const vote = async (anecdote) => {
     const anecdoteObj = { ...anecdote, votes: anecdote.votes + 1 }
     dispatch(upvote(anecdoteObj))
-    dispatch(displayVoteNotif(`You voted ${anecdoteObj.content}`))
+    dispatch(setNotification(`You voted ${anecdoteObj.content}`, 5))
   }
 
   return (

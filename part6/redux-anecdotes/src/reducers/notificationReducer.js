@@ -3,19 +3,9 @@ const initialState = {
   display: '',
 }
 
-export const displayVoteNotif = (message) => {
+const clearNotification = () => {
   return {
-    type: 'VOTE_NOTIF',
-    data: {
-      message,
-      display: '',
-    },
-  }
-}
-
-export const hideNotif = () => {
-  return {
-    type: 'HIDE_NOTIF',
+    type: 'CLEAR_NOTIF',
     data: {
       message: '',
       display: 'none',
@@ -23,16 +13,26 @@ export const hideNotif = () => {
   }
 }
 
+export const setNotification = (content, time) => {
+  return async (dispatch) => {
+    setTimeout(() => dispatch(clearNotification()), time * 1000)
+    dispatch({
+      type: 'SET_NOTIF',
+      data: {
+        message: content,
+        display: '',
+      },
+    })
+  }
+}
+
 const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'VOTE_NOTIF': {
-      state = action.data
-      return state
+    case 'SET_NOTIF': {
+      return action.data
     }
-    case 'HIDE_NOTIF': {
-      state = action.data
-      return state
-    }
+    case 'CLEAR_NOTIF':
+      return action.data
     default:
       return state
   }
