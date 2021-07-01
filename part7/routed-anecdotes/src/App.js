@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route, useRouteMatch } from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -7,15 +7,15 @@ const Menu = () => {
   }
   return (
     <div>
-      <a href="#" style={padding}>
+      <Link to="/" style={padding}>
         anecdotes
-      </a>
-      <a href="#" style={padding}>
+      </Link>
+      <Link to="/create" style={padding}>
         create new
-      </a>
-      <a href="#" style={padding}>
+      </Link>
+      <Link to="/about" style={padding}>
         about
-      </a>
+      </Link>
     </div>
   )
 }
@@ -25,11 +25,31 @@ const AnecdoteList = ({ anecdotes }) => (
     <h2>Anecdotes</h2>
     <ul>
       {anecdotes.map((anecdote) => (
-        <li key={anecdote.id}>{anecdote.content}</li>
+        <li key={anecdote.id}>
+          <Link to={`/anecdote/${anecdote.id}`}>{anecdote.content}</Link>
+        </li>
       ))}
     </ul>
   </div>
 )
+
+const Anecdote = ({ anecdote }) => {
+  return (
+    <div>
+      <h2>
+        {anecdote.content} by {anecdote.author}
+      </h2>
+      <div>has {anecdote.votes} votes</div>
+      <div>
+        for more info see{' '}
+        <a href={anecdote.info} target="_blank">
+          {anecdote.info}
+        </a>
+      </div>
+      <br />
+    </div>
+  )
+}
 
 const About = () => (
   <div>
@@ -154,6 +174,11 @@ const App = () => {
     setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)))
   }
 
+  const match = useRouteMatch('/anecdote/:id')
+  const anecdote = match
+    ? anecdotes.find((anecdote) => anecdote.id === match.params.id)
+    : null
+
   return (
     <div>
       <h1>Software anecdotes</h1>
@@ -164,6 +189,9 @@ const App = () => {
         </Route>
         <Route path="/create">
           <CreateNew addNew={addNew} />
+        </Route>
+        <Route path="/anecdote/:id">
+          <Anecdote anecdote={anecdote} />
         </Route>
         <Route path="/">
           <AnecdoteList anecdotes={anecdotes} />
