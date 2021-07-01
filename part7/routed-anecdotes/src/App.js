@@ -127,9 +127,9 @@ const CreateNew = (props) => {
   }
 
   const handleReset = () => {
-    contentInput.reset()
-    authorInput.reset()
-    infoInput.reset()
+    contentInput.onReset()
+    authorInput.onReset()
+    infoInput.onReset()
   }
 
   return (
