@@ -109,8 +109,6 @@ const CreateNew = (props) => {
   const contentInput = useField('text')
   const authorInput = useField('text')
   const infoInput = useField('text')
-  console.log(contentInput.value)
-
   const history = useHistory()
 
   const handleSubmit = (e) => {
@@ -126,6 +124,12 @@ const CreateNew = (props) => {
       history.push('')
       props.setNotification(`a new anecdote ${contentInput.value} created!`)
     }
+  }
+
+  const handleReset = () => {
+    contentInput.reset()
+    authorInput.reset()
+    infoInput.reset()
   }
 
   return (
@@ -145,6 +149,7 @@ const CreateNew = (props) => {
           <input {...infoInput} />
         </div>
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
     </div>
   )
