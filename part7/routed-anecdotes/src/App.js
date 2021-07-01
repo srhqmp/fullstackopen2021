@@ -6,6 +6,7 @@ import {
   useRouteMatch,
   useHistory,
 } from 'react-router-dom'
+import { useField } from './hooks'
 
 const Menu = () => {
   const padding = {
@@ -105,24 +106,25 @@ const Notification = ({ notification, setNotification }) => {
 }
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const contentInput = useField('text')
+  const authorInput = useField('text')
+  const infoInput = useField('text')
+  console.log(contentInput.value)
 
   const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: contentInput.value,
+      author: authorInput.value,
+      info: infoInput.value,
       votes: 0,
     })
 
-    if (content) {
+    if (contentInput.value) {
       history.push('')
-      props.setNotification(`a new anecdote ${content} created!`)
+      props.setNotification(`a new anecdote ${contentInput.value} created!`)
     }
   }
 
@@ -132,27 +134,15 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <input {...contentInput} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input {...authorInput} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input {...infoInput} />
         </div>
         <button>create</button>
       </form>
