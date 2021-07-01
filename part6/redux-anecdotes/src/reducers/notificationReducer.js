@@ -12,7 +12,7 @@ const clearNotification = () => {
     },
   }
 }
-
+//setTimeout seems to be working fine
 export const setNotification = (content, time) => {
   return async (dispatch) => {
     setTimeout(() => dispatch(clearNotification()), time * 1000)
