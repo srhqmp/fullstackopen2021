@@ -4,7 +4,7 @@ const config = {
   entry: ['@babel/polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'main.js'
+    filename: 'main.js',
   },
   module: {
     rules: [
@@ -12,8 +12,12 @@ const config = {
         test: /\.js$/,
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-react'],
+          presets: ['@babel/preset-env', '@babel/preset-react'],
         },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
