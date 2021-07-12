@@ -89,6 +89,9 @@ let books = [
   },
 ]
 
+const authorExists = (name) =>
+  authors.find((author) => author.name === name)
+
 const typeDefs = gql`
   type Book {
     title: String!
@@ -119,6 +122,7 @@ const typeDefs = gql`
       published: Int!
       genres: [String!]!
     ): Book
+    editAuthor(name: String!, setBornTo: Int!): Author
   }
 `
 
@@ -144,9 +148,6 @@ const resolvers = {
   },
   Mutation: {
     addBook: (root, args) => {
-      //check if author already exists in list of authors
-      const authorExists = (author) =>
-        authors.find((author) => author.name === args.author)
       if (!authorExists(args.author)) {
         const newAuthor = {
           name: args.author,
@@ -157,6 +158,15 @@ const resolvers = {
       const newBook = { ...args, id: uuid() }
       books = books.concat(newBook)
       return newBook
+    },
+    editAuthor: (root, args) => {
+      if (!authorExists(args.name)) {
+        return null
+      }
+      authors = authors.map((author) =>
+        author.name === args.name ? { ...author, born: args.setBornTo } : author
+      )
+      return authors.find((author) => author.name === args.name)
     },
   },
 }
