@@ -25,3 +25,10 @@ query booksByAuthor {
     title
   }
 }
+
+query booksByGenre {
+  allBooks(genre: "patterns") {
+    title
+    author
+  }
+}
