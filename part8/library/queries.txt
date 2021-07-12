@@ -52,3 +52,10 @@ mutation addBook {
     author
   }
 }
+
+mutation editAuthor {
+  editAuthor(name: "Sandi Metz", setBornTo: 1958) {
+    name
+    born
+  }
+}
