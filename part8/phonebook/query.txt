@@ -1,0 +1,17 @@
+mutation popoo {
+  editNumber(name: "Venla Ruuska", phone: "123456") {
+    name
+    phone
+  }
+} 
+
+query statt {
+  havePhone: allPersons(phone: YES){
+    name
+    phone
+  }
+  phoneless: allPersons(phone: NO){
+    name
+    phone
+  }
+}
