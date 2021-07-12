@@ -12,3 +12,16 @@ query allBooks {
     author
   }
 }
+
+query allAuthors {
+  allAuthors {
+    name
+    bookCount
+  }
+}
+
+query booksByAuthor {
+  allBooks(author: "Robert Martin") {
+    title
+  }
+}
