@@ -6,6 +6,7 @@ import BirthYearForm from "./BirthYearForm";
 
 const Authors = (props) => {
   const result = useQuery(ALL_AUTHORS);
+  let authors = []
 
   if (!props.show) {
     return null;
@@ -13,9 +14,9 @@ const Authors = (props) => {
 
   if (result.loading) {
     return <div>loading...</div>;
+  } else {
+    authors = result.data.allAuthors;
   }
-
-  const authors = result.data.allAuthors;
 
   return (
     <div>

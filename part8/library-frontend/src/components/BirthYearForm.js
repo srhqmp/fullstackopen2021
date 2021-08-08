@@ -1,13 +1,20 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { EDIT_AUTHOR, ALL_AUTHORS } from "../queries";
 
 const BirthYearForm = () => {
   const [name, setName] = useState("");
   const [born, setBorn] = useState("");
 
+  const [editAuthor] = useMutation(EDIT_AUTHOR, {
+    refetchQueries: [{ query: ALL_AUTHORS }],
+  });
+
   const submit = (event) => {
     event.preventDefault();
 
     console.log("set born year...");
+    editAuthor({ variables: { name, setBornTo: parseInt(born) } });
 
     setName("");
     setBorn("");
