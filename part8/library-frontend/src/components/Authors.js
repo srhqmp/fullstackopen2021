@@ -6,7 +6,7 @@ import BirthYearForm from "./BirthYearForm";
 
 const Authors = (props) => {
   const result = useQuery(ALL_AUTHORS);
-  let authors = []
+  let authors = [];
 
   if (!props.show) {
     return null;
@@ -37,7 +37,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <BirthYearForm />
+      <BirthYearForm authors={authors} />
     </div>
   );
 };
