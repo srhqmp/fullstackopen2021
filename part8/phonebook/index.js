@@ -1,6 +1,10 @@
 const { ApolloServer, gql, UserInputError } = require("apollo-server");
 const mongoose = require("mongoose");
 const Person = require("./models/person");
+const User = require("./models/user")
+const jwt = require('jsonwebtoken')
+
+const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY'
 
 const MONGODB_URI = `mongodb+srv://sarah:passwordko@clusters.zetrn.mongodb.net/phonebook-gql?retryWrites=true&w=majority`;
 
@@ -113,6 +117,17 @@ const resolvers = {
       }
       return person;
     },
+    createUser: (root, args) => {
+      const user = new User({username: args.username})
+
+      return user.save()
+        .catch(error => {
+          throw new UserInputError(error.message, {
+            invalidArgs: args
+          })
+        })
+    },
+    login: async (root)
   },
 };
 
