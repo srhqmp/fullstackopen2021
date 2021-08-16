@@ -10,6 +10,28 @@ interface ExerciseData {
 
 type ExerciseParams = Array<number>
 
+interface Data {
+    exercises: ExerciseParams;
+    target: number;
+}
+
+const parseArguments = (args: Array<String>): Data => {
+    if (args.length < 5) throw new Error('Not enough arguments')
+    if (args.length > 5) throw new Error('Too many arguments')
+
+    if (!isNaN(Number(args[2])) &&
+        !Array.isArray(args[3]))
+        return {
+            exercises: Array(args[3]),
+            target: Number(args[2])
+        }
+} else {
+    throw new Error('Provided values were not numbers!')
+    }
+}
+
+
+
 const calculateExercises = (exercise: ExerciseParams, target: number): ExerciseData => {
     const periodLength = calculatePeriodLength(exercise)
     const trainingDays = calculateTrainingDays(exercise)
