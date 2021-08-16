@@ -1,0 +1,18 @@
+{
+  "name": "samples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "multiply": "ts-node multiplicator.ts",
+    "calculate": "ts-node calculator.ts",
+    "ts-node": "ts-node"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.6.1",
+    "ts-node": "^10.2.0",
+    "typescript": "^4.3.5"
+  }
+}
