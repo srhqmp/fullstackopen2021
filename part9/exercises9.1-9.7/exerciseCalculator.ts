@@ -15,22 +15,20 @@ interface Data {
     target: number;
 }
 
-const parseArguments = (args: Array<String>): Data => {
-    if (args.length < 5) throw new Error('Not enough arguments')
-    if (args.length > 5) throw new Error('Too many arguments')
+const parseArgument = (args: Array<String>): Data => {
+    if (args.length < 6) throw new Error('Not enough arguments')
+    const arr = args.slice(5)
 
-    if (!isNaN(Number(args[2])) &&
-        !Array.isArray(args[3]))
+    if (!isNaN(Number(args[4])) &&
+        (arr.some(val => typeof Number(val) === "number")))
         return {
-            exercises: Array(args[3]),
-            target: Number(args[2])
+            exercises: arr.map(val => Number(val)),
+            target: Number(args[4])
         }
-} else {
-    throw new Error('Provided values were not numbers!')
+    else {
+        throw new Error('Provided values were not numbers!')
     }
 }
-
-
 
 const calculateExercises = (exercise: ExerciseParams, target: number): ExerciseData => {
     const periodLength = calculatePeriodLength(exercise)
@@ -59,4 +57,13 @@ const calculateRating = (periodLength: number, trainingDays: number, success: bo
     return isAlwaysPresent && success ? 3 : isAlwaysPresent ? 2 : 1
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+
+try {
+    const { target, exercises } = parseArgument(process.argv);
+    console.log(calculateExercises(exercises, target))
+} catch (e) {
+    console.log('Error, something bad happened, message: ', e.message);
+}
+
+// npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
