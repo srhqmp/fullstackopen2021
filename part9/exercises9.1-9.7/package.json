@@ -8,8 +8,8 @@
     "ts-node": "ts-node",
     "calculateBmi": "ts-node bmiCalculators.ts",
     "calculateExercises": "ts-node exerciseCalculator.ts --lib es6",
-    "start": "ts-node hello.ts",
-    "dev": "ts-node-dev hello.ts"
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev index.ts"
   },
   "author": "",
   "license": "ISC",
