@@ -3,9 +3,19 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "commonjs",
     "lib": ["es2017", "dom"],
     "types": ["node"],
-    "typeRoots": ["../node_modules/@types"]
+    "typeRoots": ["../node_modules/@types"],
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "declaration": true,
   }
 }
