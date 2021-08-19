@@ -3,21 +3,21 @@ interface BmiData {
     weight: number
 }
 
-const parseArguments = (args: Array<String>): BmiData => {
-    if (args.length < 4) throw new Error('Not enough arguments')
-    if (args.length > 4) throw new Error('Too many arguments')
+// const parseArguments = (args: Array<String>): BmiData => {
+//     if (args.length < 4) throw new Error('Not enough arguments')
+//     if (args.length > 4) throw new Error('Too many arguments')
 
-    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
-        return {
-            height: Number(args[2]),
-            weight: Number(args[3])
-        }
-    } else {
-        throw new Error('Provided values were not numbers!')
-    }
-}
+//     if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+//         return {
+//             height: Number(args[2]),
+//             weight: Number(args[3])
+//         }
+//     } else {
+//         throw new Error('Provided values were not numbers!')
+//     }
+// }
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = ({height, weight}:BmiData): string => {
     const result = weight / Math.pow((height * 0.01), 2)
     if (result < 16) {
         return "Severely Underweight"
@@ -36,9 +36,9 @@ const calculateBmi = (height: number, weight: number): string => {
     }
 }
 
-try {
-    const { weight, height } = parseArguments(process.argv)
-    console.log(calculateBmi(height, weight))
-} catch (e) {
-    console.log('Error, something bad happened, message: ', e.message)
-}
+// try {
+//     const { weight, height } = parseArguments(process.argv)
+//     console.log(calculateBmi(height, weight))
+// } catch (e) {
+//     console.log('Error, something bad happened, message: ', e.message)
+// }
