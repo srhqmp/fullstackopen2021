@@ -1,6 +1,8 @@
 import express from "express";
 const app = express();
 
+app.use(express.json());
+
 import { calculator } from './calculator';
 
 // adding prefix _ allows ts to not check unused var
