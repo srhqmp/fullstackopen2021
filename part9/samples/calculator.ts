@@ -1,28 +1,28 @@
-type Operation = 'multiply' | 'add' | 'divide'
-type Return = number | string
+type Operation = 'multiply' | 'add' | 'divide';
+type Return = number | string;
 
-const calculator = (a: number, b: number, op: Operation): Return => {
+export const calculator = (a: number, b: number, op: Operation): Return => {
     switch (op) {
         case 'multiply':
-            return a * b
+            return a * b;
         case 'divide':
-            if (b === a) throw new Error('Can\'t divide by 0!')
-            return a / b
+            if (b === a) throw new Error('Can\'t divide by 0!');
+            return a / b;
         case 'add':
-            return a + b
+            return a + b;
         default:
-            throw new Error('Operation is not multiplu, add or divide!')
+            throw new Error('Operation is not multiplu, add or divide!');
 
     }
-}
+};
 
 try {
-    console.log(calculator(0, 1, 'divide'))
+    console.log(calculator(0, 1, 'divide'));
 } catch (e) {
-    console.log('Something went wrong, error message:', e.message)
+    console.log('Something went wrong, error message:', e.message);
 }
 
-console.log(process.argv)
+console.log(process.argv);
 
 // const calculator = (a: number, b: number, op: Operation): Return => {
 //     if (op === 'multiply') {
